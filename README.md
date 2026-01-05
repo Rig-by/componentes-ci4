@@ -66,3 +66,105 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - json (enabled by default - don't turn it off)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+
+
+
+
+
+componentes-ci4/
+│
+├── app/
+│   ├── Config/
+│   │   ├── App.php
+│   │   ├── Database.php
+│   │   └── Routes.php                           [RIGOBERTO - Config rutas]
+│   │
+│   ├── Controllers/
+│   │   ├── BaseController.php
+│   │   ├── Home.php                             [RIGOBERTO - Home básico]
+│   │   └── DemoController.php                   [ZULEMA - Demo completo]
+│   │
+│   ├── Libraries/
+│   │   ├── UiComponents.php                     [RIGOBERTO - Crea base]
+│   │   │                                        [TODOS - Agregan sus métodos]
+│   │   └── Components/
+│   │       │
+│   │       ├── Base/
+│   │       │   └── BaseComponent.php            ┌─────────────────────────┐
+│   │       │                                    │ RIGOBERTO       │
+│   │       ├── Statistics/                      │  archivos base         │
+│   │       │   ├── KpiCard.php                  │ ✅ BaseComponent        │
+│   │       │   ├── MetricCard.php               │ ✅ UiComponents         │
+│   │       │   ├── ProgressBar.php              │ ✅ KpiCard              │
+│   │       │   ├── StatBadge.php                │ ✅ MetricCard           │
+│   │       │   └── ComparisonCard.php           │ ✅ ProgressBar          │
+│   │       │                                    └─────────────────────────┘
+│   │       │
+│   │       ├── Tables/                          ┌─────────────────────────┐
+│   │       │   ├── DataTable.php                │ LIZBETH                 │
+│   │       │   ├── SimpleTable.php              │  componentes tablas    │
+│   │       │   └── SummaryTable.php             │ ✅ DataTable            │
+│   │       │                                    │ ✅ SimpleTable          │
+│   │       │                                    │ ✅ SummaryTable         │
+│   │       │                                    └─────────────────────────┘
+│   │       │
+│   │       ├── Layout/                          ┌─────────────────────────┐
+│   │       │   ├── Card.php                     │ JAVIER                  │
+│   │       │   ├── Alert.php                    │  componentes layout    │
+│   │       │   ├── Panel.php                    │ ✅ Card                 │
+│   │       │   └── Grid.php                     │ ✅ Alert                │
+│   │       │                                    │ ✅ Panel                │
+│   │       │                                    │ ✅ Grid                 │
+│   │       │                                    └─────────────────────────┘
+│   │       │
+│   │       └── Display/                         ┌─────────────────────────┐
+│   │           └── Timeline.php                 │ ZULEMA                  │
+│   │                                            │  archivos principales  │
+│   ├── Models/                                  │ ✅ StatBadge            │
+│   │   └── StatsModel.php                       │ ✅ ComparisonCard       │
+│   │                                            │ ✅ Timeline             │
+│   └── Views/                                   │ ✅ DemoController       │
+│       ├── layouts/                             │ ✅ StatsModel           │
+│       │   └── main.php                         │ + Vistas + CSS          │
+│       │                                        └─────────────────────────┘
+│       └── demo/
+│           ├── index.php                        [ZULEMA - Vista demo]
+│           ├── statistics.php                   [ZULEMA - Demo stats]
+│           └── tables.php                       [ZULEMA - Demo tables]
+│
+├── public/
+│   ├── .htaccess
+│   ├── index.php
+│   ├── css/
+│   │   └── components.css                       [ZULEMA - Todos los estilos]
+│   ├── js/
+│   │   └── components.js                        [ZULEMA - JS opcional]
+│   │
+│   └── assets/
+│       └── icons/                               [ZULEMA - Iconos]
+│
+├── writable/
+│   ├── cache/
+│   ├── logs/
+│   ├── session/
+│   └── uploads/
+│
+├── docs/
+│   ├── INSTALLATION.md                          [RIGOBERTO]
+│   ├── USAGE.md                                 [RIGOBERTO]
+│   ├── statistics-components.md                 [RIGOBERTO]
+│   ├── tables-components.md                     [LIZBETH]
+│   ├── layout-components.md                     [JAVIER]
+│   └── examples.md                              [ZULEMA]
+│
+├── vendor/                                      [Composer - No tocar]
+│
+├── .gitignore                                   [RIGOBERTO]
+├── .env
+├── .env.example                                 [RIGOBERTO]
+├── composer.json
+├── composer.lock
+├── spark
+└── README.md                                    [RIGOBERTO]
+
