@@ -41,9 +41,14 @@ class UiComponents
      * 
      * @return KpiCard
      */
-    public function kpiCard(): KpiCard
+    public function kpiCard(string $title = '', string $value = '', string $icon = '', string $color = 'primary'): KpiCard
     {
-        return new KpiCard();
+        $card = new KpiCard();
+        if ($title) $card->setTitle($title);
+        if ($value) $card->setValue($value);
+        if ($icon)  $card->setIcon($icon);
+        $card->setColor($color);
+        return $card;
     }
 
     /**
@@ -52,9 +57,12 @@ class UiComponents
      * 
      * @return MetricCard
      */
-    public function metricCard(): MetricCard
+    public function metricCard(string $label = '', string $amount = ''): MetricCard
     {
-        return new MetricCard();
+        $card = new MetricCard();
+        if ($label)  $card->setLabel($label);
+        if ($amount) $card->setAmount($amount);
+        return $card;
     }
 
     /**
@@ -63,9 +71,13 @@ class UiComponents
      * 
      * @return ProgressBar
      */
-    public function progressBar(): ProgressBar
+    public function progressBar(int $percent = 0, string $color = 'primary', string $label = ''): ProgressBar
     {
-        return new ProgressBar();
+        $bar = new ProgressBar();
+        $bar->setPercent($percent);
+        $bar->setColor($color);
+        if ($label) $bar->setLabel($label);
+        return $bar;
     }
 
     // =========================================================================
