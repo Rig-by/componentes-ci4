@@ -5,6 +5,11 @@ namespace App\Libraries;
 use App\Libraries\Components\Statistics\KpiCard;
 use App\Libraries\Components\Statistics\MetricCard;
 use App\Libraries\Components\Statistics\ProgressBar;
+use App\Libraries\Components\Tables\SummaryTable;
+use App\Libraries\Components\Tables\SimpleTable;
+use App\Libraries\Components\Tables\DataTable;
+use App\Libraries\Components\Base\BaseComponent;;
+
 
 /**
  * UiComponents
@@ -85,10 +90,47 @@ class UiComponents
     // TODO: Lizbeth agregará aquí sus métodos
     // =========================================================================
 
-    // public function dataTable(): DataTable { ... }
-    // public function simpleTable(): SimpleTable { ... }
-    // public function summaryTable(): SummaryTable { ... }
+    /**
+     * MODO AVANZADO: Tabla inteligente (DataTable).
+     * Permite configuración detallada de columnas, callbacks y acciones.
+     * * @return DataTable
+     */
+    public function smartTable(): DataTable
+    {
+        return new DataTable();
+    }
 
+    /**
+     * MODO RÁPIDO: Tabla simple.
+     * Ideal para volcados rápidos de datos sin configuración compleja.
+     * * @param array $headers Lista de encabezados ['ID', 'Nombre', ...]
+     * @param array $data    Array de datos (objetos o arrays)
+     * @return SimpleTable
+     */
+    public function simpleTable(array $headers, array $data): SimpleTable
+    {
+        $table = new SimpleTable();
+        // Pasamos datos crudos; el componente se encarga de limpiarlos
+        return $table->setHeaders($headers)->setRows($data);
+    }
+
+    /**
+     * MODO REPORTE: Tabla de resumen (SummaryTable).
+     * Incluye una fila de totales al pie de la tabla.
+     * * @param array $headers Encabezados
+     * @param array $data    Cuerpo de datos
+     * @param array $totals  Fila de totales para el footer
+     * @return SummaryTable
+     */
+    public function summaryTable(array $headers, array $data, array $totals): SummaryTable
+    {
+        $table = new SummaryTable();
+        $table->setHeaders($headers)
+            ->setRows($data)
+            ->setTotals($totals);
+
+        return $table;
+    }
     // =========================================================================
     // COMPONENTES LAYOUT
     // TODO: Javier agregará aquí sus métodos
