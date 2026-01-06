@@ -22,7 +22,7 @@ class Home extends BaseController
             'title' => 'Sistema de Componentes PHP - CodeIgniter 4',
             'version' => '1.0.0',
             'team' => [
-                'Rigoberto' => 'Líder + Base + Statistics',
+                'Rigoberto' => 'Base + Statistics',
                 'Lizbeth' => 'Tablas',
                 'Javier' => 'Layout',
                 'Zulema' => 'Statistics Avanzado + Demo'
