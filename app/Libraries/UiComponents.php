@@ -91,6 +91,45 @@ class UiComponents
     // COMPONENTES STATISTICS AVANZADO + DISPLAY
     // TODO: Zulema agregará aquí sus métodos
     // =========================================================================
+    /**
+     * Crea un componente StatBadge
+     * Insignia de estadística con valor, label, color e icono
+     * 
+     * @param array $data
+     * @return string
+     */
+    public function statBadge(array $data = []): string
+    {
+        $component = new \App\Libraries\Components\Statistics\StatBadge();
+        return $component->render($data);
+    }
+
+    /**
+     * Crea un componente ComparisonCard
+     * Tarjeta que compara valores actuales vs anteriores
+     * 
+     * @param array $data
+     * @return string
+     */
+    public function comparisonCard(array $data = []): string
+    {
+        $component = new \App\Libraries\Components\Statistics\ComparisonCard();
+        return $component->render($data);
+    }
+
+    /**
+     * Crea un componente Timeline
+     * Línea de tiempo para mostrar eventos cronológicos
+     * 
+     * @param array $data
+     * @return string
+     */
+    public function timeline(array $data = []): string
+    {
+        $component = new \App\Libraries\Components\Display\Timeline();
+        return $component->render($data);
+    }
+        
 
     // public function statBadge(): StatBadge { ... }
     // public function comparisonCard(): ComparisonCard { ... }
