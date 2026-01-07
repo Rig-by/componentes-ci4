@@ -8,7 +8,11 @@ use App\Libraries\Components\Statistics\ProgressBar;
 use App\Libraries\Components\Tables\SummaryTable;
 use App\Libraries\Components\Tables\SimpleTable;
 use App\Libraries\Components\Tables\DataTable;
-use App\Libraries\Components\Base\BaseComponent;;
+use App\Libraries\Components\Base\BaseComponent;
+use App\Libraries\Components\Layout\Card;
+use App\Libraries\Components\Layout\Alert;
+use App\Libraries\Components\Layout\Panel;
+use App\Libraries\Components\Layout\Grid;
 
 
 /**
@@ -49,9 +53,12 @@ class UiComponents
     public function kpiCard(string $title = '', string $value = '', string $icon = '', string $color = 'primary'): KpiCard
     {
         $card = new KpiCard();
-        if ($title) $card->setTitle($title);
-        if ($value) $card->setValue($value);
-        if ($icon)  $card->setIcon($icon);
+        if ($title)
+            $card->setTitle($title);
+        if ($value)
+            $card->setValue($value);
+        if ($icon)
+            $card->setIcon($icon);
         $card->setColor($color);
         return $card;
     }
@@ -65,8 +72,10 @@ class UiComponents
     public function metricCard(string $label = '', string $amount = ''): MetricCard
     {
         $card = new MetricCard();
-        if ($label)  $card->setLabel($label);
-        if ($amount) $card->setAmount($amount);
+        if ($label)
+            $card->setLabel($label);
+        if ($amount)
+            $card->setAmount($amount);
         return $card;
     }
 
@@ -81,7 +90,8 @@ class UiComponents
         $bar = new ProgressBar();
         $bar->setPercent($percent);
         $bar->setColor($color);
-        if ($label) $bar->setLabel($label);
+        if ($label)
+            $bar->setLabel($label);
         return $bar;
     }
 
@@ -133,13 +143,68 @@ class UiComponents
     }
     // =========================================================================
     // COMPONENTES LAYOUT
-    // TODO: Javier agregará aquí sus métodos
+    // Creados por: Javier
     // =========================================================================
 
-    // public function card(): Card { ... }
-    // public function alert(): Alert { ... }
-    // public function panel(): Panel { ... }
-    // public function grid(): Grid { ... }
+    /**
+     * Crea un componente Card
+     * Tarjeta flexible con header, body y footer opcionales
+     * 
+     * @return Card
+     */
+    public function card(string $title = '', string $content = ''): Card
+    {
+        $card = new Card();
+        if ($title)
+            $card->setTitle($title);
+        if ($content)
+            $card->setContent($content);
+        return $card;
+    }
+
+    /**
+     * Crea un componente Alert
+     * Alerta/notificación con diferentes tipos
+     * 
+     * @return Alert
+     */
+    public function alert(string $message = '', string $type = 'info'): Alert
+    {
+        $alert = new Alert();
+        if ($message)
+            $alert->setMessage($message);
+        $alert->setType($type);
+        return $alert;
+    }
+
+    /**
+     * Crea un componente Panel
+     * Panel simple para agrupar contenido
+     * 
+     * @return Panel
+     */
+    public function panel(string $title = '', string $content = ''): Panel
+    {
+        $panel = new Panel();
+        if ($title)
+            $panel->setTitle($title);
+        if ($content)
+            $panel->setContent($content);
+        return $panel;
+    }
+
+    /**
+     * Crea un componente Grid
+     * Grilla responsive para organizar elementos
+     * 
+     * @return Grid
+     */
+    public function grid(int $columns = 3): Grid
+    {
+        $grid = new Grid();
+        $grid->setColumns($columns);
+        return $grid;
+    }
 
     // =========================================================================
     // COMPONENTES STATISTICS AVANZADO + DISPLAY
