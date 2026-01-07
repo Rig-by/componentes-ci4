@@ -42,23 +42,20 @@
                     <h3 class="h4 mb-3 mt-4"><i class="bi bi-bell me-2"></i>Componente Alert</h3>
 
                     <div class="mb-4">
-                        <!-- Alert básico -->
                         <?= $ui->alert('Este es un mensaje informativo básico.', 'info') ?>
 
-                        <!-- Alert con método de conveniencia -->
                         <?= $ui->alert()->success('¡Operación completada exitosamente!') ?>
 
                         <?= $ui->alert()->warning('Advertencia: Revisa los datos antes de continuar.') ?>
 
                         <?= $ui->alert()->danger('Error: No se pudo procesar la solicitud.') ?>
 
-                        <!-- Alert dismissible con título -->
                         <?= $ui->alert()
                             ->setTitle('Notificación Importante')
                             ->setMessage('Esta alerta puede cerrarse haciendo clic en la X.')
                             ->setType('primary')
                             ->setIcon('bi bi-megaphone-fill')
-                            ->dismissible()
+                            ->isDismissible()
                             ->render()
                             ?>
                     </div>
@@ -70,30 +67,26 @@
 
                     <div class="row g-4 mb-4">
                         <div class="col-md-4">
-                            <!-- Card básica -->
                             <?= $ui->card('Card Básica', '<p>Esta es una tarjeta simple con título y contenido.</p>') ?>
                         </div>
 
                         <div class="col-md-4">
-                            <!-- Card con icono y variant -->
                             <?= $ui->card()
                                 ->setTitle('Card con Icono')
-                                ->setHeaderIcon('bi bi-star-fill')
-                                ->setContent('<p>Tarjeta con icono en el header y estilo primary.</p>')
+                                ->setIcon('bi bi-star-fill')
+                                ->setContent('<p>Tarjeta con icono en el header.</p>')
                                 ->setVariant('primary')
                                 ->render()
                                 ?>
                         </div>
 
                         <div class="col-md-4">
-                            <!-- Card con footer y shadow -->
                             <?= $ui->card()
                                 ->setTitle('Card Completa')
                                 ->setSubtitle('Con subtítulo')
-                                ->setHeaderIcon('bi bi-gear')
-                                ->setContent('<p>Esta tarjeta tiene header, body, footer y sombra.</p>')
+                                ->setIcon('bi bi-gear')
+                                ->setContent('<p>Esta tarjeta tiene header, body y footer.</p>')
                                 ->setFooter('<button class="btn btn-sm btn-primary">Acción</button>')
-                                ->withShadow()
                                 ->render()
                                 ?>
                         </div>
@@ -101,27 +94,19 @@
 
                     <div class="row g-4 mb-4">
                         <div class="col-md-6">
-                            <!-- Card colapsable -->
                             <?= $ui->card()
-                                ->setTitle('Card Colapsable')
-                                ->setHeaderIcon('bi bi-arrows-collapse')
-                                ->setContent('
-                                    <p>Esta tarjeta puede expandirse y contraerse.</p>
-                                    <p>Haz clic en el icono de flecha en el header para probarlo.</p>
-                                ')
-                                ->collapsible(true, false)
-                                ->setVariant('info')
+                                ->setTitle('Card Success')
+                                ->setContent('<p>Tarjeta con estilo de éxito.</p>')
+                                ->setVariant('success')
                                 ->render()
                                 ?>
                         </div>
 
                         <div class="col-md-6">
-                            <!-- Card con diferentes variantes -->
                             <?= $ui->card()
-                                ->setTitle('Card Success')
-                                ->setContent('<p>Tarjeta con estilo de éxito para mensajes positivos.</p>')
-                                ->setVariant('success')
-                                ->withShadow()
+                                ->setTitle('Card Warning')
+                                ->setContent('<p>Tarjeta con estilo de advertencia.</p>')
+                                ->setVariant('warning')
                                 ->render()
                                 ?>
                         </div>
@@ -141,34 +126,7 @@
                             <?= $ui->panel()
                                 ->setTitle('Panel con Icono')
                                 ->setIcon('bi bi-folder')
-                                ->setContent('<p>Panel con icono y borde personalizado.</p>')
-                                ->setVariant('white')
-                                ->render()
-                                ?>
-                        </div>
-                    </div>
-
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-4">
-                            <?= $ui->panel()
-                                ->setTitle('Padding Small')
-                                ->setContent('Contenido compacto')
-                                ->setPadding('small')
-                                ->render()
-                                ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $ui->panel()
-                                ->setTitle('Padding Normal')
-                                ->setContent('Contenido normal')
-                                ->render()
-                                ?>
-                        </div>
-                        <div class="col-md-4">
-                            <?= $ui->panel()
-                                ->setTitle('Padding Large')
-                                ->setContent('Contenido espacioso')
-                                ->setPadding('large')
+                                ->setContent('<p>Panel con icono en el título.</p>')
                                 ->render()
                                 ?>
                         </div>
@@ -188,9 +146,8 @@
                         ?>
 
                     <h5 class="text-muted mb-3 mt-4">Grid de 4 columnas</h5>
-                    <?= $ui->grid()
-                        ->fourColumns()
-                        ->setGap('small')
+                    <?= $ui->grid(4)
+                        ->setGap(2)
                         ->addItem('<div class="bg-primary text-white p-3 rounded text-center">Col 1</div>')
                         ->addItem('<div class="bg-success text-white p-3 rounded text-center">Col 2</div>')
                         ->addItem('<div class="bg-warning text-dark p-3 rounded text-center">Col 3</div>')
@@ -198,10 +155,9 @@
                         ->render()
                         ?>
 
-                    <h5 class="text-muted mb-3 mt-4">Grid de 2 columnas con gap grande</h5>
-                    <?= $ui->grid()
-                        ->twoColumns()
-                        ->setGap('large')
+                    <h5 class="text-muted mb-3 mt-4">Grid de 2 columnas</h5>
+                    <?= $ui->grid(2)
+                        ->setGap(4)
                         ->addItem($ui->panel('Panel Izquierdo', 'Contenido del panel izquierdo')->render())
                         ->addItem($ui->panel('Panel Derecho', 'Contenido del panel derecho')->render())
                         ->render()

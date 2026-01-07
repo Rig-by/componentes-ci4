@@ -13,6 +13,7 @@ use App\Libraries\Components\Layout\Card;
 use App\Libraries\Components\Layout\Alert;
 use App\Libraries\Components\Layout\Panel;
 use App\Libraries\Components\Layout\Grid;
+use App\Libraries\Components\Layout\Toast;
 
 
 /**
@@ -152,7 +153,7 @@ class UiComponents
      * 
      * @return Card
      */
-    public function card(string $title = '', string $content = ''): Card
+    public function card(string $title = '', string $content = '')
     {
         $card = new Card();
         if ($title)
@@ -168,7 +169,7 @@ class UiComponents
      * 
      * @return Alert
      */
-    public function alert(string $message = '', string $type = 'info'): Alert
+    public function alert(string $message = '', string $type = 'info')
     {
         $alert = new Alert();
         if ($message)
@@ -183,7 +184,7 @@ class UiComponents
      * 
      * @return Panel
      */
-    public function panel(string $title = '', string $content = ''): Panel
+    public function panel(string $title = '', string $content = '')
     {
         $panel = new Panel();
         if ($title)
@@ -199,11 +200,26 @@ class UiComponents
      * 
      * @return Grid
      */
-    public function grid(int $columns = 3): Grid
+    public function grid(int $columns = 3)
     {
         $grid = new Grid();
         $grid->setColumns($columns);
         return $grid;
+    }
+
+    /**
+     * Crea un componente Toast
+     * Notificación temporal que aparece y desaparece
+     * 
+     * @return Toast
+     */
+    public function toast(string $message = '', string $type = 'info')
+    {
+        $toast = new Toast();
+        if ($message)
+            $toast->setMessage($message);
+        $toast->setType($type);
+        return $toast;
     }
 
     // =========================================================================

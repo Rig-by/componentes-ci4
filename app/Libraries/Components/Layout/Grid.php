@@ -5,21 +5,22 @@ namespace App\Libraries\Components\Layout;
 use App\Libraries\Components\Base\BaseComponent;
 
 /**
- * Grid Component
- * 
- * Componente de grilla/cuadrícula para organizar elementos en filas y columnas.
- * Basado en el sistema de grillas de Bootstrap.
+ * Grid
+ * Componente de grilla/cuadrícula para organizar elementos.
+ * Basado en el sistema de grillas de Bootstrap con opciones avanzadas.
  * 
  * @author Javier
  * @package App\Libraries\Components\Layout
  */
 class Grid extends BaseComponent
 {
-    protected array $items = [];
-    protected int $columns = 3; // Número de columnas por defecto
-    protected string $gap = 'normal'; // none, small, normal, large
-    protected bool $responsive = true;
-    protected string $alignment = 'start'; // start, center, end, stretch
+    protected $items = [];
+    protected $columns = 3;        // Número de columnas por defecto
+    protected $gap = 3;            // Espaciado entre elementos (0-5)
+    protected $responsive = true;  // Activar breakpoints responsivos
+    protected $alignment = 'start';// start, center, end, stretch
+    protected $justify = 'start';  // start, center, end, between, around, evenly
+    protected $equalHeight = false;// Hacer todas las columnas de igual altura
 
     public function __construct()
     {
@@ -31,26 +32,34 @@ class Grid extends BaseComponent
 
     /**
      * Agrega un elemento a la grilla
+     * @param string $content HTML del contenido
+     * @param int $cols Columnas que ocupa (0 = automático)
+     * @param string $classes Clases adicionales para el item
      */
-    public function addItem(string $content, int $cols = 0): self
+    public function addItem(string $content, int $cols = 0, string $classes = '')
     {
         $this->items[] = [
             'content' => $content,
-            'cols' => $cols
+            'cols' => $cols,
+            'classes' => $classes
         ];
         return $this;
     }
 
     /**
-     * Agrega múltiples elementos
+     * Agrega múltiples elementos de una vez
      */
-    public function setItems(array $items): self
+    public function setItems(array $items)
     {
         foreach ($items as $item) {
             if (is_string($item)) {
                 $this->addItem($item);
-            } elseif (is_array($item)) {
-                $this->addItem($item['content'] ?? '', $item['cols'] ?? 0);
+            } elseif (is_array($item) && isset($item['content'])) {
+                $this->addItem(
+                    $item['content'],
+                    $item['cols'] ?? 0,
+                    $item['classes'] ?? ''
+                );
             }
         }
         return $this;
@@ -59,54 +68,120 @@ class Grid extends BaseComponent
     /**
      * Establece el número de columnas
      */
-    public function setColumns(int $columns): self
+    public function setColumns(int $columns)
     {
         $this->columns = max(1, min(12, $columns));
         return $this;
     }
 
     /**
-     * Establece el espacio entre elementos
+     * Establece el espaciado entre elementos (0-5)
      */
-    public function setGap(string $gap): self
+    public function setGap(int $gap)
     {
-        $this->gap = $gap;
+        $this->gap = max(0, min(5, $gap));
         return $this;
     }
 
     /**
-     * Activa/desactiva diseño responsivo
+     * Desactiva la adaptación responsiva
      */
-    public function responsive(bool $responsive = true): self
+    public function noResponsive()
     {
-        $this->responsive = $responsive;
+        $this->responsive = false;
         return $this;
     }
 
     /**
-     * Establece la alineación de los elementos
+     * Alineación vertical de los items
      */
-    public function setAlignment(string $alignment): self
+    public function setAlignment(string $alignment)
     {
         $this->alignment = $alignment;
         return $this;
     }
 
-    // --- Métodos de conveniencia ---
+    /**
+     * Justificación horizontal de los items
+     */
+    public function setJustify(string $justify)
+    {
+        $this->justify = $justify;
+        return $this;
+    }
 
-    public function twoColumns(): self
+    /**
+     * Hace que todas las columnas tengan la misma altura
+     */
+    public function equalHeight(bool $equal = true)
+    {
+        $this->equalHeight = $equal;
+        return $this;
+    }
+
+    // --- Métodos de conveniencia para columnas ---
+
+    public function oneColumn()
+    {
+        return $this->setColumns(1);
+    }
+
+    public function twoColumns()
     {
         return $this->setColumns(2);
     }
 
-    public function threeColumns(): self
+    public function threeColumns()
     {
         return $this->setColumns(3);
     }
 
-    public function fourColumns(): self
+    public function fourColumns()
     {
         return $this->setColumns(4);
+    }
+
+    public function sixColumns()
+    {
+        return $this->setColumns(6);
+    }
+
+    // --- Métodos de conveniencia para alineación ---
+
+    public function alignCenter()
+    {
+        $this->alignment = 'center';
+        return $this;
+    }
+
+    public function alignEnd()
+    {
+        $this->alignment = 'end';
+        return $this;
+    }
+
+    public function alignStretch()
+    {
+        $this->alignment = 'stretch';
+        return $this;
+    }
+
+    public function justifyCenter()
+    {
+        $this->justify = 'center';
+        return $this;
+    }
+
+    public function justifyBetween()
+    {
+        $this->justify = 'between';
+        return $this;
+    }
+
+    public function justifyAround()
+    {
+        $this->justify = 'around';
+        return $this;
     }
 
     // --- Renderizado ---
@@ -114,39 +189,40 @@ class Grid extends BaseComponent
     public function render(): string
     {
         // Gap
-        $gapClass = match ($this->gap) {
-            'none' => 'g-0',
-            'small' => 'g-2',
-            'large' => 'g-5',
-            default => 'g-3'
-        };
-        $this->addClass($gapClass);
+        $this->addClass("g-{$this->gap}");
 
-        // Alineación
-        $alignClass = match ($this->alignment) {
-            'center' => 'align-items-center justify-content-center',
-            'end' => 'align-items-end justify-content-end',
-            'stretch' => 'align-items-stretch',
-            default => 'align-items-start'
-        };
-        $this->addClass($alignClass);
+        // Alineación vertical
+        if ($this->alignment !== 'start') {
+            $this->addClass("align-items-{$this->alignment}");
+        }
 
-        // Calcular clases de columna
+        // Justificación horizontal
+        if ($this->justify !== 'start') {
+            $this->addClass("justify-content-{$this->justify}");
+        }
+
+        // Calcular tamaño de columna por defecto
         $colSize = intval(12 / $this->columns);
 
         // Generar items
         $itemsHtml = '';
         foreach ($this->items as $item) {
             $cols = $item['cols'] > 0 ? $item['cols'] : $colSize;
+            $extraClasses = $item['classes'] ? " {$item['classes']}" : '';
 
             if ($this->responsive) {
-                // Clases responsivas: 12 en móvil, 6 en tablet, cols en desktop
+                // Responsive: 12 en móvil, 6 en tablet, cols en desktop
                 $colClass = "col-12 col-md-6 col-lg-{$cols}";
             } else {
                 $colClass = "col-{$cols}";
             }
 
-            $itemsHtml .= "<div class='{$colClass}'>{$item['content']}</div>";
+            // Igual altura
+            if ($this->equalHeight) {
+                $colClass .= ' d-flex';
+            }
+
+            $itemsHtml .= "<div class='{$colClass}{$extraClasses}'>{$item['content']}</div>";
         }
 
         return "
