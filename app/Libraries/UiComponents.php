@@ -5,6 +5,9 @@ namespace App\Libraries;
 use App\Libraries\Components\Statistics\KpiCard;
 use App\Libraries\Components\Statistics\MetricCard;
 use App\Libraries\Components\Statistics\ProgressBar;
+use App\Libraries\Components\Statistics\StatBadge;
+use App\Libraries\Components\Statistics\ComparisonCard;
+use App\Libraries\Components\Display\Timeline;
 use App\Libraries\Components\Tables\SummaryTable;
 use App\Libraries\Components\Tables\SimpleTable;
 use App\Libraries\Components\Tables\DataTable;
@@ -14,6 +17,7 @@ use App\Libraries\Components\Layout\Alert;
 use App\Libraries\Components\Layout\Panel;
 use App\Libraries\Components\Layout\Grid;
 use App\Libraries\Components\Layout\Toast;
+
 
 
 /**
@@ -98,13 +102,14 @@ class UiComponents
 
     // =========================================================================
     // COMPONENTES TABLES
-    // TODO: Lizbeth agregará aquí sus métodos
+    // Creados por: Lizbeth
     // =========================================================================
 
     /**
      * MODO AVANZADO: Tabla inteligente (DataTable).
      * Permite configuración detallada de columnas, callbacks y acciones.
-     * * @return DataTable
+     * 
+     * @return DataTable
      */
     public function smartTable(): DataTable
     {
@@ -114,7 +119,8 @@ class UiComponents
     /**
      * MODO RÁPIDO: Tabla simple.
      * Ideal para volcados rápidos de datos sin configuración compleja.
-     * * @param array $headers Lista de encabezados ['ID', 'Nombre', ...]
+     * 
+     * @param array $headers Lista de encabezados ['ID', 'Nombre', ...]
      * @param array $data    Array de datos (objetos o arrays)
      * @return SimpleTable
      */
@@ -128,7 +134,8 @@ class UiComponents
     /**
      * MODO REPORTE: Tabla de resumen (SummaryTable).
      * Incluye una fila de totales al pie de la tabla.
-     * * @param array $headers Encabezados
+     * 
+     * @param array $headers Encabezados
      * @param array $data    Cuerpo de datos
      * @param array $totals  Fila de totales para el footer
      * @return SummaryTable
@@ -142,6 +149,7 @@ class UiComponents
 
         return $table;
     }
+
     // =========================================================================
     // COMPONENTES LAYOUT
     // Creados por: Javier
@@ -224,51 +232,67 @@ class UiComponents
 
     // =========================================================================
     // COMPONENTES STATISTICS AVANZADO + DISPLAY
-    // TODO: Zulema agregará aquí sus métodos
+    // Creados por: Zulema
     // =========================================================================
+
     /**
      * Crea un componente StatBadge
      * Insignia de estadística con valor, label, color e icono
      * 
-     * @param array $data
-     * @return string
+     * @return StatBadge
      */
-    public function statBadge(array $data = []): string
+    public function statBadge(string $label = '', string $value = '', string $color = 'primary'): StatBadge
     {
-        $component = new \App\Libraries\Components\Statistics\StatBadge();
-        return $component->render($data);
+        $component = new StatBadge();
+        if ($label) {
+            $component->setLabel($label);
+        }
+        if ($value) {
+            $component->setValue($value);
+        }
+        if ($color) {
+            $component->setColor($color);
+        }
+        return $component;
     }
 
     /**
      * Crea un componente ComparisonCard
      * Tarjeta que compara valores actuales vs anteriores
      * 
-     * @param array $data
-     * @return string
+     * @return ComparisonCard
      */
-    public function comparisonCard(array $data = []): string
+    public function comparisonCard(string $title = '', string $value = '', string $comparison = '', string $trend = '', string $color = 'primary'): ComparisonCard
     {
-        $component = new \App\Libraries\Components\Statistics\ComparisonCard();
-        return $component->render($data);
+        $component = new ComparisonCard();
+        if ($title) {
+            $component->setTitle($title);
+        }
+        if ($value) {
+            $component->setValue($value);
+        }
+        if ($comparison) {
+            $component->setComparison($comparison);
+        }
+        if ($trend) {
+            $component->setTrend($trend);
+        }
+        if ($color) {
+            $component->setColor($color);
+        }
+        return $component;
     }
 
     /**
      * Crea un componente Timeline
      * Línea de tiempo para mostrar eventos cronológicos
      * 
-     * @param array $data
-     * @return string
+     * @return Timeline
      */
-    public function timeline(array $data = []): string
+    public function timeline(): Timeline
     {
-        $component = new \App\Libraries\Components\Display\Timeline();
-        return $component->render($data);
+        return new Timeline();
     }
-        
-
-    // public function statBadge(): StatBadge { ... }
-    // public function comparisonCard(): ComparisonCard { ... }
-    // public function timeline(): Timeline { ... }
 
     /**
      * Obtiene la versión de la librería

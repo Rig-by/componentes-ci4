@@ -6,15 +6,37 @@ use App\Libraries\Components\Base\BaseComponent;
 
 class Timeline extends BaseComponent
 {
+    protected $items = [];
+    protected $title = '';
+
+    public function setItems(array $items)
+    {
+        $this->items = $items;
+        return $this;
+    }
+
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    public function addItem(array $item)
+    {
+        $this->items[] = $item;
+        return $this;
+    }
+
     public function render(array $data = []): string
     {
-        $items = $data['items'] ?? [];
-        $title = $data['title'] ?? 'Timeline';
+        // Si se pasa data por parámetro, usarlo (compatibilidad)
+        $items = $data['items'] ?? $this->items;
+        $title = $data['title'] ?? $this->title;
         
         $html = '<div class="timeline-component">';
         
         if ($title) {
-            $html .= '<h3 class="timeline-title">' . esc($title) . '</h3>';
+            $html .= '<h3 class="timeline-title mb-4">' . esc($title) . '</h3>';
         }
         
         $html .= '<div class="timeline">';
@@ -23,24 +45,35 @@ class Timeline extends BaseComponent
             $date = $item['date'] ?? '';
             $itemTitle = $item['title'] ?? '';
             $description = $item['description'] ?? '';
-            $type = $item['type'] ?? 'default';
+            $color = $item['color'] ?? 'primary';
+            $icon = $item['icon'] ?? 'bi-circle-fill';
             
-            $html .= '<div class="timeline-item timeline-' . esc($type) . '">';
-            $html .= '<div class="timeline-marker"></div>';
-            $html .= '<div class="timeline-content">';
+            $html .= '<div class="timeline-item mb-4">';
+            $html .= '<div class="d-flex">';
+            
+            // Marker
+            $html .= '<div class="timeline-marker me-3">';
+            $html .= '<div class="bg-' . esc($color) . ' rounded-circle p-2 text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">';
+            $html .= '<i class="' . esc($icon) . '"></i>';
+            $html .= '</div>';
+            $html .= '</div>';
+            
+            // Content
+            $html .= '<div class="timeline-content flex-grow-1">';
             
             if ($date) {
-                $html .= '<div class="timeline-date">' . esc($date) . '</div>';
+                $html .= '<div class="text-muted small mb-1">' . esc($date) . '</div>';
             }
             
             if ($itemTitle) {
-                $html .= '<h4 class="timeline-item-title">' . esc($itemTitle) . '</h4>';
+                $html .= '<h5 class="mb-2">' . esc($itemTitle) . '</h5>';
             }
             
             if ($description) {
-                $html .= '<p class="timeline-description">' . esc($description) . '</p>';
+                $html .= '<p class="text-muted mb-0">' . esc($description) . '</p>';
             }
             
+            $html .= '</div>';
             $html .= '</div>';
             $html .= '</div>';
         }
@@ -49,5 +82,10 @@ class Timeline extends BaseComponent
         $html .= '</div>';
         
         return $html;
+    }
+
+    public function __toString()
+    {
+        return $this->render();
     }
 }

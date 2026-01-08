@@ -230,6 +230,99 @@
                         <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer"></div>
                     </div>
 
+                    <!-- ============================================ -->
+                    <!-- STAT BADGE -->
+                    <!-- ============================================ -->
+
+                    <div class="mt-4">
+                        <h3 class="h4 mb-3"><i class="bi bi-award me-2"></i>Componente StatBadge</h3>
+
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <?= $ui->statBadge('Conversión', '24.5%', 'success') ?>
+                            </div>
+                            <div class="col-md-3">
+                                <?= $ui->statBadge('Rebote', '32%', 'danger') ?>
+                            </div>
+                            <div class="col-md-3">
+                                <?= $ui->statBadge('CTR', '4.8%', 'info') ?>
+                            </div>
+                            <div class="col-md-3">
+                                <?= $ui->statBadge()
+                                    ->setLabel('ROI')
+                                    ->setValue('156%')
+                                    ->setColor('warning')
+                                    ->render()
+                                    ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- COMPARISON CARD -->
+                    <!-- ============================================ -->
+
+                    <div class="mt-4">
+                        <h3 class="h4 mb-3"><i class="bi bi-bar-chart me-2"></i>Componente ComparisonCard</h3>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <?= $ui->comparisonCard('Ventas', '$125,400', '+12.5%', 'up', 'success') ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?= $ui->comparisonCard('Tráfico', '45,230', '-3.2%', 'down', 'danger') ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?= $ui->comparisonCard()
+                                    ->setTitle('Engagement')
+                                    ->setValue('8,945')
+                                    ->setComparison('+18.7%')
+                                    ->setTrend('up')
+                                    ->setColor('primary')
+                                    ->render()
+                                    ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- TIMELINE -->
+                    <!-- ============================================ -->
+
+                    <div class="mt-4">
+                        <h3 class="h4 mb-3"><i class="bi bi-clock-history me-2"></i>Componente Timeline</h3>
+
+                        <?php
+                        $eventos = [
+                            [
+                                'title' => 'Proyecto Iniciado',
+                                'description' => 'Se dio inicio al desarrollo del sistema.',
+                                'date' => '15 Dic 2024',
+                                'icon' => 'bi-flag-fill',
+                                'color' => 'success'
+                            ],
+                            [
+                                'title' => 'Primera Release',
+                                'description' => 'Se publicó la versión 1.0 del sistema.',
+                                'date' => '28 Dic 2024',
+                                'icon' => 'bi-rocket-takeoff-fill',
+                                'color' => 'primary'
+                            ],
+                            [
+                                'title' => 'Actualización v1.5',
+                                'description' => 'Nuevos componentes agregados al sistema.',
+                                'date' => '08 Ene 2025',
+                                'icon' => 'bi-star-fill',
+                                'color' => 'warning'
+                            ]
+                        ];
+
+                        echo $ui->timeline()
+                            ->setItems($eventos)
+                            ->render();
+                        ?>
+                    </div>
+
                 </div>
             </div>
 
