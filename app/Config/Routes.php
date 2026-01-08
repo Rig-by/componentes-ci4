@@ -8,9 +8,12 @@ use CodeIgniter\Router\RouteCollection;
 
 // Ruta principal
 $routes->get('/', 'Home::index');
+$routes->get('test', 'Test::index');
 
 // Rutas de demostración (cuando hagan el DemoController)
 $routes->group('demo', function($routes) {
+    // Ruta para ver la Demo completa de componentes
+    $routes->get('demo', 'DemoController::index');
     $routes->get('/', 'DemoController::index');
     $routes->get('statistics', 'DemoController::statistics');
     $routes->get('tables', 'DemoController::tables');

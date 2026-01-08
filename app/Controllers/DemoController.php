@@ -18,6 +18,8 @@ class DemoController extends BaseController
     
     public function index()
     {
+        // Mantenemos la lógica de tus compañeros pero con tus variables
+        helper('url');
         $data = [
             'title' => 'Demo de Componentes UI',
             'description' => 'Demostración de todos los componentes disponibles'
@@ -28,9 +30,7 @@ class DemoController extends BaseController
     
     public function statistics()
     {
-        // Obtener datos de ejemplo
         $stats = $this->statsModel->getExampleStats();
-        
         $data = [
             'title' => 'Componentes de Estadísticas',
             'stats' => $stats
@@ -41,10 +41,14 @@ class DemoController extends BaseController
     
     public function tables()
     {
-        $data = [
-            'title' => 'Componentes de Tablas'
-        ];
-        
+        $data = ['title' => 'Componentes de Tablas'];
         return view('demo/tables', $data);
+    }
+
+    // Esta es la función de tus compañeros (Javier), ¡no la borres!
+    public function layout()
+    {
+        helper('url');
+        return view('demo/layout');
     }
 }
