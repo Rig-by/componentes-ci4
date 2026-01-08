@@ -2,23 +2,53 @@
 
 namespace App\Controllers;
 
+use App\Libraries\UiComponents;
+use App\Models\StatsModel;
+
 class DemoController extends BaseController
 {
+    protected $ui;
+    protected $statsModel;
+    
+    public function __construct()
+    {
+        $this->ui = new UiComponents();
+        $this->statsModel = new StatsModel();
+    }
+    
     public function index()
     {
-        // Carga el helper de URL para que funcionen base_url() y los estilos
+        // Mantenemos la lógica de tus compañeros pero con tus variables
         helper('url');
-
-        // Carga la vista que está en la carpeta 'demo'
-        return view('demo/index');
+        $data = [
+            'title' => 'Demo de Componentes UI',
+            'description' => 'Demostración de todos los componentes disponibles'
+        ];
+        
+        return view('demo/index', $data);
+    }
+    
+    public function statistics()
+    {
+        $stats = $this->statsModel->getExampleStats();
+        $data = [
+            'title' => 'Componentes de Estadísticas',
+            'stats' => $stats
+        ];
+        
+        return view('demo/statistics', $data);
+    }
+    
+    public function tables()
+    {
+        $data = ['title' => 'Componentes de Tablas'];
+        return view('demo/tables', $data);
     }
 
+    // Esta es la función de tus compañeros (Javier), ¡no la borres!
     public function layout()
     {
-        // Carga el helper de URL para que funcionen base_url() y los estilos
         helper('url');
-
-        // Carga la vista de demo de componentes Layout (Javier)
         return view('demo/layout');
     }
 }
