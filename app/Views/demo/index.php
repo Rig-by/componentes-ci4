@@ -28,7 +28,7 @@
                         </ol>
                     </nav>
                     <h1 class="page-title mb-2">Panel de Control</h1>
-                    <p class="lead">Generado 100% con librerías PHP.</p>
+                    <p class="lead">Generado 100% con librerías PHP (Rigoberto & Lizbeth).</p>
                 </div>
             </div>
 

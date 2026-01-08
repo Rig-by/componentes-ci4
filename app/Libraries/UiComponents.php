@@ -17,7 +17,7 @@ use App\Libraries\Components\Base\BaseComponent;;
  * Librería principal para crear componentes de interfaz de usuario.
  * Actúa como factory para todos los componentes del sistema.
  * 
- * @author Rigoberto
+ * @author Rigoberto (Líder del proyecto)
  * @package App\Libraries
  */
 class UiComponents
