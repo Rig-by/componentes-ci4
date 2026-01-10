@@ -216,4 +216,87 @@ class Panel extends BaseComponent
             {$footerHtml}
         </div>";
     }
+
+    /**
+     * Renderiza sólo la parte inicial del panel (open wrapper + header + body apertura).
+     * Útil para escribir contenido manualmente entre el inicio y el fin.
+     *
+     * @return string
+     */
+    public function renderStart(): string
+    {
+        // Añadimos clases y atributos como en render()
+        $this->addClass("bg-{$this->variant}");
+
+        if ($this->bordered) {
+            $this->addClass('border');
+        }
+
+        if ($this->rounded) {
+            $this->addClass('rounded');
+        }
+
+        // Padding
+        $paddingClass = match ($this->padding) {
+            'none' => 'p-0',
+            'small' => 'p-2',
+            'large' => 'p-4',
+            default => 'p-3'
+        };
+        $this->addClass($paddingClass);
+
+        $collapseId = "panel-collapse-{$this->id}";
+
+        // Header
+        $headerHtml = '';
+        if ($this->title || $this->toolbar) {
+            $iconHtml = $this->icon ? "<i class='{$this->icon} me-2'></i>" : '';
+
+            $collapseBtn = '';
+            if ($this->collapsible) {
+                $chevron = $this->collapsed ? 'bi-chevron-right' : 'bi-chevron-down';
+                $collapseBtn = "
+                    <button class='btn btn-sm btn-link p-0 text-decoration-none' type='button' 
+                            data-bs-toggle='collapse' data-bs-target='#{$collapseId}'>
+                        <i class='bi {$chevron}'></i>
+                    </button>";
+            }
+
+            $headerHtml = "
+                <div class='panel-header mb-3 pb-2 border-bottom d-flex justify-content-between align-items-center'>
+                    <h5 class='mb-0 d-flex align-items-center'>
+                        {$collapseBtn}
+                        {$iconHtml}{$this->escape($this->title)}
+                    </h5>
+                    <div class='panel-toolbar'>{$this->toolbar}</div>
+                </div>";
+        }
+
+        // Body apertura (sin contenido)
+        $bodyClass = 'panel-body';
+        $bodyAttrs = '';
+        if ($this->collapsible) {
+            $bodyClass .= ' collapse' . ($this->collapsed ? '' : ' show');
+            $bodyAttrs = "id='{$collapseId}'";
+        }
+
+        $bodyOpen = "<div class='{$bodyClass}' {$bodyAttrs}>";
+
+        return "\n        <div {$this->buildAttributes()}>\n            {$headerHtml}\n            {$bodyOpen}";
+    }
+
+    /**
+     * Renderiza el cierre del panel (cierre del body, footer y cierre del wrapper).
+     *
+     * @return string
+     */
+    public function renderEnd(): string
+    {
+        $footerHtml = '';
+        if ($this->footer) {
+            $footerHtml = "<div class='panel-footer mt-3 pt-2 border-top'>{$this->footer}</div>";
+        }
+
+        return "</div>\n            {$footerHtml}\n        </div>";
+    }
 }

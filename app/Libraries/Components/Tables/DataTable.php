@@ -76,7 +76,7 @@ class DataTable extends BaseComponent
 
         // Envolver en Card y Responsive (Estilo Nifty)
         return "
-        <div class='card h-100'>
+        <div class='card mb-3'>
             <div class='table-responsive'>
                 <table {$this->buildAttributes()}>
                     {$thead}
